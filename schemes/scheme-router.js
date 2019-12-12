@@ -54,6 +54,7 @@ router.post('/', (req, res) => {
     res.status(201).json(scheme);
   })
   .catch (err => {
+    console.log(err);
     res.status(500).json({ message: 'Failed to create new scheme' });
   });
 });
@@ -87,7 +88,7 @@ router.put('/:id', (req, res) => {
     if (scheme) {
       Schemes.update(changes, id)
       .then(updatedScheme => {
-        res.json(updatedScheme);
+        res.status(200).json(updatedScheme);
       });
     } else {
       res.status(404).json({ message: 'Could not find scheme with given id' });
@@ -113,5 +114,19 @@ router.delete('/:id', (req, res) => {
     res.status(500).json({ message: 'Failed to delete scheme' });
   });
 });
+
+// function validateId(req, res, next){
+//   const { id } = req.params;
+//   Schemes.findById(id)
+//   .then(scheme => {
+//     console.log("In validateId", scheme);
+//     if (scheme) {
+//       req.body.id;
+//       next();
+//       } else {
+//       res.status(404).json({ message: 'Could not find scheme with given id' });
+//     }
+//   })
+// };
 
 module.exports = router;
